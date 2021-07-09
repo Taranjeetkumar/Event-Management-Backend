@@ -4,6 +4,8 @@ const ErrorResponse = require('../../../helper/errorResponse');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user.model');
 const fs = require("fs");
+const { sendVerificationOtpOnPhone, verifyOtpOnPhone, sendOtpOnMail, verifyOtpOnMail } = require("../../../helper/twilio");
+const validator = require("email-validator");
 
 generateRandomCode = () => Math.floor(100000 + Math.random() * 900000);
 
@@ -27,7 +29,7 @@ exports.postregister = asyncHandler(async (req, res, next) => {
     let pass = password.toString();
     const hashedPassord = await bcrypt.hash(pass, salt);
 
-    if (!phone && !email) {
+    if (!email) {
         return next(new ErrorResponse(msg.emailOrPhoneRequired, 409));
     }
 
@@ -44,12 +46,14 @@ exports.postregister = asyncHandler(async (req, res, next) => {
         latitude: latitude,
         longitude: longitude,
     });
+
     const token = response.getSignedJwtToken();//create token
     response = JSON.stringify(response);
     response = JSON.parse(response);
 
     delete response['password'];
 
+    await sendOtpOnMail(response.email);
     res.status(200).json({
         success: true,
         data: response,
@@ -57,6 +61,35 @@ exports.postregister = asyncHandler(async (req, res, next) => {
     });
 });
 
+// @desc    Verify Otp
+// @route   POST/api/v1/user/verifyotp
+// access    Public
+exports.verifyOtp = asyncHandler(async (req, res, next) => {
+    let { email, otp } = req.body;
+    let status = false;
+    if (!email) {
+      return next(new ErrorResponse(msg.notValid, 409));
+    }
+    let email1 = validator.validate(email);
+    let ack;
+    if (email1 == true) {
+  
+      ack = await verifyOtpOnMail(otp, email);
+      if (ack.status == "approved") {
+        status = true;
+      }
+    } 
+  
+    if (status == true) {
+      res.status(200).json({
+        success: true,
+        data: `otp verified`,
+      });
+    } else {
+      return next(new ErrorResponse(msg.notVerified, 409));
+    }
+  });
+  
 // @desc    Login User
 // @route   POST/api/v1/user/login
 //access    Public

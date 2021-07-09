@@ -1,6 +1,6 @@
 const msg = {
     duplicatePhoneOrEmail:"User already exists.Please Login with your credentials",
-    emailOrPhoneRequired: "Please fill phone or email",
+    emailOrPhoneRequired: "Please fill email",
     unauthorizedLogin:"Invalid Credentials",
     unauthorizedRoute:"Not authorized to access this route",
     UserAlreadyExist:"User already exist in this channel",
