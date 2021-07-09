@@ -107,33 +107,3 @@ exports.getMe = asyncHandler(async (req, res, next) => {
     });
 });
 
-
-// @desc    Find user near 10 km
-// @route   GET/api/v1/user/find
-//access    Private
-exports.findUsersByFilter = asyncHandler(async (req, res, next) => {
-    let page = parseInt(req.query.page) >= 1 ? parseInt(req.query.page) : 1,
-        limit = parseInt(req.query.limit) ? parseInt(req.query.limit) : 10;
-
-    let user = await User.findById(req.user._id);
-    console.log(user)
-
-    let users = await User.find({
-        point: {
-            $near:
-            {
-                $geometry: {
-                    type: "Point",
-                    coordinates: [Number(user.longitude), Number(user.latitude)]
-                },
-                $maxDistance: 10000
-            }
-        }
-    }).skip(limit * page - limit)
-    .limit(limit);
-
-res.status(200).json({
-    success: true,
-    data: users
-});
-});
