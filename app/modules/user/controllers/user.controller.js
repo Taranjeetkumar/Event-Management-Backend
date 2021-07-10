@@ -46,13 +46,13 @@ exports.postregister = asyncHandler(async (req, res, next) => {
         longitude: longitude,
     });
 
-    const token = response.getSignedJwtToken();//create token
+    const token = await response.getSignedJwtToken();//create token
     response = JSON.stringify(response);
     response = JSON.parse(response);
-
     delete response['password'];
+//    let data =  await sendOtpOnMail(response.email);
 
-    await sendOtpOnMail(response.email);
+
     res.status(200).json({
         success: true,
         data: response,
