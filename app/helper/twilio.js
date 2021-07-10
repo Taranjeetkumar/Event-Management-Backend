@@ -35,6 +35,8 @@ exports.verifyOtpOnPhone = async function (otp, mobile, res) {
 };
 
 exports.sendOtpOnMail = async function (email) {
+
+  console.log("email fun : ",email);
   let data = await client.verify
     .services(serviceId)
     .verifications.create({ to: email, channel: "email" });

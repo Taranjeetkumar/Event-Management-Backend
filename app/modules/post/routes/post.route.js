@@ -32,12 +32,11 @@ function fileFilter(req, file, cb) {
 
 var upload = multer({ storage: storage, limits: { fileSize: maxSize }, fileFilter: fileFilter });
 
-
-
-const { addPost, allPosts  } = require('../controllers/post.controller');
+const { addPost, allPosts,updatePost  } = require('../controllers/post.controller');
 const { protect } = require('../../../middleware/auth');
 
 router.post('/add',protect,  addPost);
+router.post('/update',protect,  updatePost);
 router.get('/all', allPosts);
 
 
