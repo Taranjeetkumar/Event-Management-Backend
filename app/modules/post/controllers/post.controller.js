@@ -3,6 +3,8 @@ const asyncHandler = require('../../../middleware/async');
 const ErrorResponse = require('../../../helper/errorResponse');
 const Post = require('../models/post.model');
 const User = require('../../user/models/user.model');
+const Booking = require('../../booking/models/booking.model');
+
 
 // @desc    Add Post
 // @route   POST/api/v1/post/add
