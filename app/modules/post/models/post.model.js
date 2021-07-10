@@ -12,38 +12,42 @@ const EventSchema = new mongoose.Schema({
         required: [true, "This field is Required"]
     },
     organizerId: {
-       type: String,
-       ref:'User'
+        type: String,
+        ref: 'User'
     },
-    eventImages:[{
-        type:String,
+    eventPrice: {
+        type: Number,
+        required: true,
+    },
+    eventImages: [{
+        type: String,
     }],
-   eventName:{
-       type:String,
-       required : true,
-   },
-   eventDescription:{
-       type:String,
-   },
-   eventStartDate:{
-       type:Date,
-       required :true
-   },
-   eventEndDate:{
-       type: Date,
-       required: true,
-   },
-   eventStartTime:{
-       type: String,
-       required:true,
-   },
-   eventEndTime:{
-       type:String,
-       required:true
-   },
-   location:{
-       type:String,
-   },
+    eventName: {
+        type: String,
+        required: true,
+    },
+    eventDescription: {
+        type: String,
+    },
+    eventStartDate: {
+        type: Date,
+        required: true
+    },
+    eventEndDate: {
+        type: Date,
+        required: true,
+    },
+    eventStartTime: {
+        type: String,
+        required: true,
+    },
+    eventEndTime: {
+        type: String,
+        required: true
+    },
+    location: {
+        type: String,
+    },
 }, {
     timestamps: true,
 });

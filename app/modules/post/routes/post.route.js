@@ -38,7 +38,7 @@ const { addPost, allPosts  } = require('../controllers/post.controller');
 const { protect } = require('../../../middleware/auth');
 
 router.post('/add',protect,  addPost);
-router.get('/all', protect, allPosts);
+router.get('/all', allPosts);
 
 
 module.exports = router;
