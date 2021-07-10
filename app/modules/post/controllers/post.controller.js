@@ -8,7 +8,15 @@ const User = require('../../user/models/user.model');
 // @route   POST/api/v1/post/add
 // access   Public
 exports.addPost = asyncHandler(async (req, res, next) => {
-
+let findLastPost = await Post.findOne().select('eventId').sort({createdAt:-1});
+let eventId;
+ if(findLastPost){
+     eventId = Number(findLastPost.eventId) +1;
+ }
+ else{
+     eventId = 1001
+ }
+req.body.eventId =eventId;
     req.body.organizerId =req.user._id;
     const post = await Post.create(req.body);
 
