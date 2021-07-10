@@ -33,10 +33,6 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         default: "",
     },
-    address:{
-        type:mongoose.Schema.ObjectId,
-        ref:"Address"
-    },
     longitude: {
         type: Number,
         default: ""
