@@ -18,7 +18,7 @@ exports.addEvent = asyncHandler(async (req, res, next) => {
     }
     req.body.eventId = eventId;
     req.body.organizerId = req.user._id;
-  
+
     if (req.body.eventStartDate) {
         req.body.eventStartDate = new Date(req.body.eventStartDate);
     }
@@ -58,9 +58,22 @@ exports.allEvents = asyncHandler(async (req, res, next) => {
     let page = parseInt(req.query.page) >= 1 ? parseInt(req.query.page) : 1,
         limit = parseInt(req.query.limit) ? parseInt(req.query.limit) : 10;
 
-        
+
     const post = await Post.find({}).populate("organizerId", "name email address").skip(limit * page - limit)
         .limit(limit);
+
+    if (post.length > 0) {
+        for (let i = 0; i < post.length; i++) {
+            let booking = await Booking.find({ eventId: post[i]._id }).populate('userId', '_id name email')
+            let users = [];
+            if (booking.length > 0) {
+                for (let k = 0; k < booking.length; k++) {
+                    users.push(booking[k].userId._id)
+                }
+            }
+            post[i]._doc.users = users;
+        }
+    }
 
 
     res.status(200).json({
