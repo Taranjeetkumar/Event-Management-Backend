@@ -7,8 +7,8 @@ const User = require('../../user/models/user.model');
 // @desc    Add Post
 // @route   POST/api/v1/post/add
 // access   Public
-exports.addPost = asyncHandler(async (req, res, next) => {
-    let findLastPost = await Post.findOne().select('eventId').sort({ createdAt: -1 });
+exports.addEvent = asyncHandler(async (req, res, next) => {
+    let findLastPost = await Post.findOne({}).select('eventId').sort({ createdAt: -1 });
     let eventId;
     if (findLastPost) {
         eventId = Number(findLastPost.eventId) + 1;
@@ -18,7 +18,7 @@ exports.addPost = asyncHandler(async (req, res, next) => {
     }
     req.body.eventId = eventId;
     req.body.organizerId = req.user._id;
-
+  
     if (req.body.eventStartDate) {
         req.body.eventStartDate = new Date(req.body.eventStartDate);
     }
@@ -38,7 +38,7 @@ exports.addPost = asyncHandler(async (req, res, next) => {
 // @desc    Update Post
 // @route   POST/api/v1/post/update
 // access   Public
-exports.updatePost = asyncHandler(async (req, res, next) => {
+exports.updateEvent = asyncHandler(async (req, res, next) => {
 
     const post = await Post.findByIdAndUpdate(req.query.eventId, req.body, {
         new: true,
@@ -54,13 +54,11 @@ exports.updatePost = asyncHandler(async (req, res, next) => {
 // @desc    Get All Post
 // @route   POST/api/v1/post/posts
 // access   Public
-exports.allPosts = asyncHandler(async (req, res, next) => {
+exports.allEvents = asyncHandler(async (req, res, next) => {
     let page = parseInt(req.query.page) >= 1 ? parseInt(req.query.page) : 1,
         limit = parseInt(req.query.limit) ? parseInt(req.query.limit) : 10;
 
-        if(req.body.eventImages){
-            req.body.eventImages = JSON.parse(req.body.eventImages);
-        }
+        
     const post = await Post.find({}).populate("organizerId", "name email address").skip(limit * page - limit)
         .limit(limit);
 
