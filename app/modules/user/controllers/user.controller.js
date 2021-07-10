@@ -109,6 +109,7 @@ exports.login = asyncHandler(async (req, res, next) => {
     }
 
     const token = user.getSignedJwtToken();
+    console.log(user)
     user = JSON.stringify(user);
     user = JSON.parse(user);
 
