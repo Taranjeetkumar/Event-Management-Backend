@@ -22,7 +22,7 @@ exports.addEvent = asyncHandler(async (req, res, next) => {
     if (req.body.eventStartDate) {
         req.body.eventStartDate = new Date(req.body.eventStartDate);
     }
-
+    console.log( " fh : ", req.body)
     if (req.body.eventEndDate) {
         req.body.eventEndDate = new Date(req.body.eventEndDate);
     }
