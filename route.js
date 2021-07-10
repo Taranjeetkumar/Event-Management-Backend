@@ -1,5 +1,7 @@
 const user_route = require('./app/modules/user/routes/user.route');
 const post_route = require('./app/modules/post/routes/post.route');
+const booking_route = require('./app/modules/booking/routes/booking.route');
+
 
 module.exports = [
     {
@@ -9,5 +11,9 @@ module.exports = [
     {
         path: '/api/v1/post',
         handler: post_route
-    }
+    },
+    {
+        path: '/api/v1/booking',
+        handler: booking_route
+    },
 ]
