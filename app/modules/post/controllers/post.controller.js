@@ -58,6 +58,9 @@ exports.allPosts = asyncHandler(async (req, res, next) => {
     let page = parseInt(req.query.page) >= 1 ? parseInt(req.query.page) : 1,
         limit = parseInt(req.query.limit) ? parseInt(req.query.limit) : 10;
 
+        if(req.body.eventImages){
+            req.body.eventImages = JSON.parse(req.body.eventImages);
+        }
     const post = await Post.find({}).populate("organizerId", "name email address").skip(limit * page - limit)
         .limit(limit);
 

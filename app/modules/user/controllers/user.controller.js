@@ -50,7 +50,7 @@ exports.postregister = asyncHandler(async (req, res, next) => {
     response = JSON.stringify(response);
     response = JSON.parse(response);
     delete response['password'];
-//    let data =  await sendOtpOnMail(response.email);
+ let data =  await sendOtpOnMail(response.email);
 
 
     res.status(200).json({
