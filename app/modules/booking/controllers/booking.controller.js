@@ -10,7 +10,7 @@ const User = require('../../user/models/user.model');
 exports.eventBooking = asyncHandler(async (req, res, next) => {
     req.body.userId = req.user._id;
     req.body.bookingDate = new Date(Date.now());
-    let find1 = await Booking.find({userId : req.user._id,eventId: req.body.eventId });
+    let find1 = await Booking.findOne({userId : req.user._id,eventId: req.body.eventId });
     if(find1){
         return next(new ErrorResponse("You already booked this event", 401));
 
