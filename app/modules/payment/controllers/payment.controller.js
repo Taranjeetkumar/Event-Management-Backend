@@ -11,6 +11,16 @@ let instance = new Razorpay({
     key_secret: 'gd2JEZV6IywEDS4acns57Vpv' // your `KEY_SECRET`
 })
 
+
+exports.createPayment = asyncHandler(async (req, res, next) => {
+    req.body.userId = req.user._id;
+    let payment = await Payment.create(req.body);
+    res.status(200).json({
+        success: true,
+        data: payment,
+    });
+});
+
 // @desc    Add Payment
 // @route   POST/api/v1/payment/add
 // access   Public
