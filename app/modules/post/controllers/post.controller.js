@@ -8,10 +8,23 @@ const Booking = require("../../booking/models/booking.model");
 // @desc    Add Post
 // @route   POST/api/v1/post/add
 // access   Public
+exports.getCreatedEvent = asyncHandler(async (req, res, next) => {
+    let post1 = await Post.findOne({ _id: req.query.eventId, organizerId: req.user._id });
+    if (!post1) {
+        return next(new ErrorResponse("You are not authorized to access this route", 409));
+    }
+
+    res.status(200).json({
+        success: true,
+        data: post1,
+    });
+});
+
+// @desc    Add Post
+// @route   POST/api/v1/post/add
+// access   Public
 exports.addEvent = asyncHandler(async (req, res, next) => {
-    let findLastPost = await Post.findOne({})
-        .select("eventId")
-        .sort({ createdAt: -1 });
+    let findLastPost = await Post.findOne({}).select("eventId").sort({ createdAt: -1 });
     let eventImages = req.files;
     let images = [];
     if (eventImages) {
