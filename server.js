@@ -62,13 +62,4 @@ cron.schedule("* * * * *", async function () {
 })
 
 
-
-
-
-
-
-
-
-
-
 server = http.listen(PORT, console.log(`Server is up and running at port number ${PORT} , Mode=${process.env.NODE_ENV}`));
