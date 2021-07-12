@@ -38,6 +38,7 @@ exports.payment = asyncHandler(async (req, res, next) => {
         res.status(200).json({
             success: true,
             data: data,
+            booking:booking
         });
     }).catch((error) => {
         res.status(401).json({
