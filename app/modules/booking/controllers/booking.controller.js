@@ -15,8 +15,8 @@ exports.eventBooking = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse("You already booked this event", 401));
 
     }
-    const booking = await Booking.create(req.body);
-
+    let booking = await Booking.create(req.body);
+booking= await Booking.fin
     res.status(200).json({
         success: true,
         data: booking,
