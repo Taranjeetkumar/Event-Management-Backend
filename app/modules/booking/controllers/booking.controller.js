@@ -10,13 +10,13 @@ const User = require('../../user/models/user.model');
 exports.eventBooking = asyncHandler(async (req, res, next) => {
     req.body.userId = req.user._id;
     req.body.bookingDate = new Date(Date.now());
-    let find1 = await Booking.findOne({userId : req.user._id,eventId: req.body.eventId });
-    if(find1){
+    let find1 = await Booking.findOne({ userId: req.user._id, eventId: req.body.eventId });
+    if (find1) {
         return next(new ErrorResponse("You already booked this event", 401));
 
     }
     let booking = await Booking.create(req.body);
-booking= await Booking.fin
+    booking = await Booking.findById(booking._id).populate('eventId', 'eventPrice')
     res.status(200).json({
         success: true,
         data: booking,
@@ -27,9 +27,9 @@ booking= await Booking.fin
 // @route   POST/api/v1/post/add
 // access   Public
 exports.updateEventBooking = asyncHandler(async (req, res, next) => {
-    const booking = await Booking.findByIdAndUpdate(req.body.bookingId,req.body,{
-        new:true,
-        runValidators:true
+    const booking = await Booking.findByIdAndUpdate(req.body.bookingId, req.body, {
+        new: true,
+        runValidators: true
     });
 
     res.status(200).json({
@@ -42,7 +42,7 @@ exports.updateEventBooking = asyncHandler(async (req, res, next) => {
 // @route   POST/api/v1/post/add
 // access   Public
 exports.getUserBookings = asyncHandler(async (req, res, next) => {
-    const booking = await Booking.find({userId : req.user._id}).populate('userId','name email').populate('eventId','eventId organizerId eventPrice eventImages eventName eventDescription eventStartDate eventEndDate eventStartTime eventEndTime location');
+    const booking = await Booking.find({ userId: req.user._id }).populate('userId', 'name email').populate('eventId', 'eventId organizerId eventPrice eventImages eventName eventDescription eventStartDate eventEndDate eventStartTime eventEndTime location');
 
     res.status(200).json({
         success: true,
