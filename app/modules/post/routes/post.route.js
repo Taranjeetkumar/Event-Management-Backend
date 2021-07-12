@@ -10,4 +10,5 @@ router.put('/update', upload1('eventImages').array('eventImages'), protect, upda
 router.get('/all', allEvents);
 router.get('/created/event',protect,getCreatedEvent);
 
+
 module.exports = router;
