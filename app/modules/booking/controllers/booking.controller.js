@@ -42,7 +42,7 @@ exports.updateEventBooking = asyncHandler(async (req, res, next) => {
 // @route   POST/api/v1/post/add
 // access   Public
 exports.getUserBookings = asyncHandler(async (req, res, next) => {
-    const booking = await Booking.find({userId : req.user._id}).populate('userId','name email');
+    const booking = await Booking.find({userId : req.user._id}).populate('userId','name email').populate('eventId','eventId organizerId eventPrice eventImages eventName eventDescription eventStartDate eventEndDate eventStartTime eventEndTime location');
 
     res.status(200).json({
         success: true,
