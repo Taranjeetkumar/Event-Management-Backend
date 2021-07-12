@@ -9,6 +9,8 @@ const errorHandler = require('./app/middleware/error');
 const connectDB = require('./app/db/mongoose');
 const router = express.Router();
 const routes = require('./route');
+const cron = require("node-cron");
+const Post = require('./app/modules/post/models/post.model');
 
 //load env variables
 dotenv.config({ path: './config/config.env' });
@@ -46,6 +48,27 @@ routes.map(route => {
 
 //our errorHandler middleware(it is after brands route becuase node executes in linear order)
 app.use(errorHandler);
+
+
+cron.schedule("* * * * *", async function () {
+    let today = new Date();
+    let posts = await Post.find({});
+    for (let i = 0; i < posts.length; i++) {
+        let postEndTime = posts[i].eventEndDate.getTime();
+        if (today.getTime() > posts[i].eventEndDate.getTime()) {
+            await Post.findByIdAndUpdate(posts[i]._id, { status: "expired" }, { new: true, runValidators: true });
+        }
+    }
+})
+
+
+
+
+
+
+
+
+
 
 
 server = http.listen(PORT, console.log(`Server is up and running at port number ${PORT} , Mode=${process.env.NODE_ENV}`));

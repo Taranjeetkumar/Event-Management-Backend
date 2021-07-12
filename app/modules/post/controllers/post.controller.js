@@ -24,7 +24,6 @@ exports.addEvent = asyncHandler(async (req, res, next) => {
     if (req.body.eventStartDate) {
         req.body.eventStartDate = new Date(req.body.eventStartDate);
     }
-    console.log( " fh : ", req.body)
     if (req.body.eventEndDate) {
         req.body.eventEndDate = new Date(req.body.eventEndDate);
     }
@@ -61,7 +60,7 @@ exports.allEvents = asyncHandler(async (req, res, next) => {
         limit = parseInt(req.query.limit) ? parseInt(req.query.limit) : 10;
 
 
-    const post = await Post.find({}).populate("organizerId", "name email address").skip(limit * page - limit)
+    const post = await Post.find({status:"available"}).populate("organizerId", "name email address").skip(limit * page - limit)
         .limit(limit);
 
     if (post.length > 0) {

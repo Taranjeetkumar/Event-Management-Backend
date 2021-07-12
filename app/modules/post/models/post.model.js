@@ -15,6 +15,11 @@ const EventSchema = new mongoose.Schema({
         type: String,
         ref: 'User'
     },
+    status: {
+        type: String,
+        enum: ["available", "expired"],
+        default: "available"
+    },
     eventPrice: {
         type: Number,
         required: true,
