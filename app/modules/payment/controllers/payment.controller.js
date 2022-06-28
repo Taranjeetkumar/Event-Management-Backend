@@ -7,8 +7,8 @@ const Booking = require('../../booking/models/booking.model');
 const Razorpay = require("razorpay");
 
 let instance = new Razorpay({
-    key_id: 'rzp_test_d3fIdfEXIFhpGY', // your `KEY_ID`
-    key_secret: 'gd2JEZV6IywEDS4acns57Vpv' // your `KEY_SECRET`
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET
 })
 
 
@@ -38,7 +38,7 @@ exports.payment = asyncHandler(async (req, res, next) => {
         res.status(200).json({
             success: true,
             data: data,
-            booking:booking
+            booking: booking
         });
     }).catch((error) => {
         res.status(401).json({

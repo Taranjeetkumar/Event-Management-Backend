@@ -24,8 +24,11 @@ exports.getCreatedEvent = asyncHandler(async (req, res, next) => {
 // @route   POST/api/v1/post/add
 // access   Public
 exports.addEvent = asyncHandler(async (req, res, next) => {
+    console.log("vdvchjs : ",req.body);
     let findLastPost = await Post.findOne({}).select("eventId").sort({ createdAt: -1 });
     let eventImages = req.files;
+
+    console.log("images : : ", eventImages)
     let images = [];
     if (eventImages) {
         if (eventImages.length != 0) {

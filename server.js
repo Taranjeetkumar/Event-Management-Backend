@@ -13,7 +13,7 @@ const cron = require("node-cron");
 const Post = require('./app/modules/post/models/post.model');
 
 //load env variables
-dotenv.config({ path: './config/config.env' });
+dotenv.config();
 const PORT = process.env.PORT || 6600;
 
 //loading database

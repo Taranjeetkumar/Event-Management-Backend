@@ -4,9 +4,10 @@ var multerS3 = require('multer-s3')
 // const User = require('../modules/user/models/user.model');
 
 aws.config.update({
-    secretAccessKey: 'Yakl2NuBY3nXtHtRp6OoUnRCWdaIn6iwR1WsuLCV',
-    accessKeyId: 'AKIAJAVMLIMYL4TYRCXQ',
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
 });
+
 var s3 = new aws.S3()
 
 exports.upload1 = (folder, req) => multer({
@@ -31,7 +32,7 @@ exports.upload1 = (folder, req) => multer({
 exports.deleteFile = (imagePath) => {
     console.log("hc",imagePath)
     s3.deleteObjects({
-        Bucket: "jolimages",
+        Bucket: "taranjeet10",
         Key: imagePath
     }, function (err, data) {
         if (data) console.log(data, "success");
@@ -42,7 +43,7 @@ exports.deleteFile = (imagePath) => {
 // to delete a single image
 exports.deleteImage = (imagePath) => {
     s3.deleteObject({
-        Bucket: "jolimages",
+        Bucket: "taranjeet10",
         Key: imagePath
     }, function (err, data) {
         if (data) console.log(data, "success");
