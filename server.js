@@ -11,6 +11,7 @@ const router = express.Router();
 const routes = require('./route');
 const cron = require("node-cron");
 const Post = require('./app/modules/post/models/post.model');
+const methodOverride = require('method-override');
 
 //load env variables
 dotenv.config();
@@ -24,6 +25,7 @@ app.set("views", "views");
 
 //intializing cors
 app.use(cors({ credentials: true }));
+app.use(methodOverride('_method'));
 
 //setting up morgan for development mode
 //middleware to interact with body
